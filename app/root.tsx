@@ -14,7 +14,6 @@ import {
 } from "@remix-run/react";
 
 import { getContacts } from "./data";
-import { Key } from "react";
 
 export const loader = async () => {
   const contacts = await getContacts();
