@@ -98,73 +98,76 @@ export async function deleteContact(id: string) {
 [
   {
     avatar:
-      "https://sessionize.com/image/124e-400o400o2-wHVdAuNaxi8KJrgtN3ZKci.jpg",
-    first: "Shruti",
-    last: "Kapoor",
-    twitter: "@shrutikapoor08",
+      "https://imag.bonviveur.com/racimos-de-tomates-frescos-vendidos-como-verdura.webp",
+    first: "Tomate",
+    last: "",
+    twitter: "8000$",
   },
   {
     avatar:
-      "https://sessionize.com/image/1940-400o400o2-Enh9dnYmrLYhJSTTPSw3MH.jpg",
-    first: "Glenn",
-    last: "Reyes",
-    twitter: "@glnnrys",
+      "https://saludinteractiva.mx/blog/wp-content/uploads/2022/05/beneficios_del_platano_istock.webp",
+    first: "Platano",
+    last: "",
+    twitter: "2000$",
   },
   {
     avatar:
-      "https://sessionize.com/image/9273-400o400o2-3tyrUE3HjsCHJLU5aUJCja.jpg",
-    first: "Ryan",
-    last: "Florence",
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTDQYd3x_6i-Ebe-a7TWV3h_njhoYs_hRna-Q&s",
+    first: "Zanahoria",
+    last: "",
+    twitter: "3000$",
   },
   {
     avatar:
-      "https://sessionize.com/image/d14d-400o400o2-pyB229HyFPCnUcZhHf3kWS.png",
-    first: "Oscar",
-    last: "Newman",
-    twitter: "@__oscarnewman",
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRTPFLV-d-xeWVqv6UEpttSs8ARIgH0b6niuQ&s",
+    first: "Cebolla",
+    last: "",
+    twitter: "4000$",
   },
   {
     avatar:
-      "https://sessionize.com/image/fd45-400o400o2-fw91uCdGU9hFP334dnyVCr.jpg",
-    first: "Michael",
-    last: "Jackson",
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSoRct5MDKg-tnHxN6JIsWFyFw50v1vOuYPfw&s",
+    first: "Manzana",
+    last: "",
+    twitter: "3000$",
   },
   {
     avatar:
-      "https://sessionize.com/image/b07e-400o400o2-KgNRF3S9sD5ZR4UsG7hG4g.jpg",
-    first: "Christopher",
-    last: "Chedeau",
-    twitter: "@Vjeux",
+      "https://i0.wp.com/plazamercado.shop/wp-content/uploads/2020/09/Piment%C3%B3n-Rojo-1.jpg?fit=800%2C800&ssl=1",
+    first: "Pimenton",
+    last: "",
+    twitter: "8000$",
   },
   {
     avatar:
-      "https://sessionize.com/image/262f-400o400o2-UBPQueK3fayaCmsyUc1Ljf.jpg",
-    first: "Cameron",
-    last: "Matheson",
-    twitter: "@cmatheson",
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQM3pAaZOd4yHt5X_Lo3GwpFKYEQP4sVV9uIQ&s",
+    first: "Ajo",
+    last: "",
+    twitter: "6000$",
   },
   {
     avatar:
-      "https://sessionize.com/image/820b-400o400o2-Ja1KDrBAu5NzYTPLSC3GW8.jpg",
-    first: "Brooks",
-    last: "Lybrand",
-    twitter: "@BrooksLybrand",
+      "https://www.mercovasa.com/wp-content/uploads/2021/04/fruit-1534494_1280-1080x675.jpg.webp",
+    first: "Pera",
+    last: "",
+    twitter: "3000$",
   },
   {
     avatar:
-      "https://sessionize.com/image/df38-400o400o2-JwbChVUj6V7DwZMc9vJEHc.jpg",
-    first: "Alex",
-    last: "Anderson",
-    twitter: "@ralex1993",
+      "https://www.lechepuleva.es/documents/13930/203222/uva_g.jpg/4ee0cd1b-f0d3-41cc-80b8-17e5a80b834a?t=1422618555000",
+    first: "Uva",
+    last: "",
+    twitter: "5000$",
   },
   {
     avatar:
-      "https://sessionize.com/image/5578-400o400o2-BMT43t5kd2U1XstaNnM6Ax.jpg",
-    first: "Kent C.",
-    last: "Dodds",
-    twitter: "@kentcdodds",
+      "https://www.finedininglovers.com/es/sites/g/files/xknfdk1706/files/styles/article_1200_800_fallback/public/2022-04/fresas%C2%A9iStock.jpg?itok=iBcd_HLd",
+    first: "Fresa",
+    last: "",
+    twitter: "7000$",
   },
-  {
+]
+  /*{
     avatar:
       "https://sessionize.com/image/c9d5-400o400o2-Sri5qnQmscaJXVB8m3VBgf.jpg",
     first: "Nevi",
@@ -308,7 +311,11 @@ export async function deleteContact(id: string) {
     last: "Jensen",
     twitter: "@jenseng",
   },
-].forEach((contact) => {
+  
+
+]*/
+
+.forEach((contact) => {
   fakeContacts.create({
     ...contact,
     id: `${contact.first.toLowerCase()}-${contact.last.toLocaleLowerCase()}`,
