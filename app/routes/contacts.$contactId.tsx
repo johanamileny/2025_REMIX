@@ -1,27 +1,34 @@
-import { json } from "@remix-run/node";
-import { Form,useLoaderData } from "@remix-run/react";
+import { json, redirect } from "@remix-run/node";
+import { Form, useLoaderData, Link } from "@remix-run/react";
 import type { FunctionComponent } from "react";
-import { getContact } from "../data";
-import type { ContactRecord } from "../data";
+import { deleteContact, getContact } from "../data";
+import type { Contact} from "../data";
 import invariant from "tiny-invariant";
-
-import type { LoaderFunctionArgs } from "@remix-run/node";
+//import { redirect } from "@remix-run/node";
+import type { ActionFunctionArgs, LoaderFunctionArgs } from "@remix-run/node";
 
 export const loader = async ({
-       params,
-     }: LoaderFunctionArgs) => {
-       invariant(params.contactId, "Missing contactId param");
-       const contact = await getContact(params.contactId);
-       if (!contact) {
-         throw new Response("Not Found", { status: 404 });
-       }
-       return json({ contact });
-     };
+  params,
+}: LoaderFunctionArgs) => {
+  invariant(params.contactId, "Missing contactId param");
+  const contact = await getContact(params.contactId);
+  if (!contact) {
+    throw new Response("Not Found", { status: 404 });
+  }
+  return json({ contact });
+};
+
+// 📌 Acción para manejar la eliminación del contacto
+export const action = async ({ params }: ActionFunctionArgs) => {
+  invariant(params.contactId, "Missing contactId param");
+  await deleteContact(params.contactId); // Eliminar el contacto
+  return redirect("/contacts"); // Redirigir a la lista de contactos
+};
+
+
 
 export default function Contact() {
-
-
- const { contact } = useLoaderData<typeof loader>();
+  const { contact } = useLoaderData<typeof loader>();
 
   return (
     <div id="contact">
@@ -76,6 +83,9 @@ export default function Contact() {
           >
             <button type="submit">Delete</button>
           </Form>
+
+          {/* Aquí agregamos el enlace para crear un nuevo contacto */}
+          <Link to="remix_2025-nodo\app\routes\newform.tsx">Add New Contact</Link>
         </div>
       </div>
     </div>
@@ -83,7 +93,7 @@ export default function Contact() {
 }
 
 const Favorite: FunctionComponent<{
-  contact: Pick<ContactRecord, "favorite">;
+  contact: Pick<Contact, "favorite">;
 }> = ({ contact }) => {
   const favorite = contact.favorite;
 
