@@ -18,11 +18,18 @@ export const loader = async ({
   return json({ contact });
 };
 
+
+
+
 // 📌 Acción para manejar la eliminación del contacto
-export const action = async ({ params }: ActionFunctionArgs) => {
+export const action = async ({ request, params }: ActionFunctionArgs) => {
   invariant(params.contactId, "Missing contactId param");
-  await deleteContact(params.contactId); // Eliminar el contacto
-  return redirect("/contacts"); // Redirigir a la lista de contactos
+  const formData = await request.formData();
+  if (formData.get("_method") === "delete") {
+    await deleteContact(params.contactId);
+    return redirect("/contacts");
+  }
+  return null;
 };
 
 
