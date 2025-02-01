@@ -18,9 +18,6 @@ export const loader = async ({
   return json({ contact });
 };
 
-
-
-
 // 📌 Acción para manejar la eliminación del contacto
 export const action = async ({ request, params }: ActionFunctionArgs) => {
   invariant(params.contactId, "Missing contactId param");
@@ -31,7 +28,6 @@ export const action = async ({ request, params }: ActionFunctionArgs) => {
   }
   return null;
 };
-
 
 
 export default function Contact() {
@@ -77,19 +73,13 @@ export default function Contact() {
           </Form>
 
           <Form
-            action="destroy"
-            method="post"
-            onSubmit={(event) => {
-              const response = confirm(
-                "Please confirm you want to delete this record."
-              );
-              if (!response) {
-                event.preventDefault();
-              }
-            }}
-          >
-            <button type="submit">Delete</button>
-          </Form>
+          method="post"
+          action= "/deleteContact"
+          
+        >
+          <input type="hidden" name="id" value={contact.id} />
+          <button type="submit">Delete</button>
+</Form>
 
           {/* Aquí agregamos el enlace para crear un nuevo contacto */}
           <Link to="remix_2025-nodo\app\routes\newform.tsx">Add New Contact</Link>

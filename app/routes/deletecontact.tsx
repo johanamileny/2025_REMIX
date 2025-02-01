@@ -1,68 +1,24 @@
-// filepath: /c:/Users/Usuario/Documents/Remix2025/remix_2025-nodo/app/routes/deletecontact.tsx
-import { redirect, json } from "@remix-run/node";
-import { Form, useLoaderData } from "@remix-run/react";
-import type { LoaderFunctionArgs, ActionFunctionArgs } from "@remix-run/node";
-import invariant from "tiny-invariant";
-import { updateContact, getContact, deleteContact } from "../data"; // Importa getContact y deleteContact
+import { ActionFunction, redirect } from "@remix-run/node";
+import { deleteContact, getContacts } from "~/data";
 
-export const loader = async ({ params }: LoaderFunctionArgs) => {
-  invariant(params.contactId, "Missing contactId param"); // Uso de invariant
-  const contact = await getContact(params.contactId);
-  if (!contact) {
-    throw new Response("Not Found", { status: 404 });
-  }
-  return json({ contact });
-};
 
-export const action = async ({ request, params }: ActionFunctionArgs) => {
-  invariant(params.contactId, "Missing contactId param");
+export const action: ActionFunction = async ({ request }) => {
   const formData = await request.formData();
-  const method = formData.get("_method");
+  const id = formData.get("id");
 
-  if (method === "delete") {
-    await deleteContact(params.contactId);
-    return redirect("/contacts");
+  if (typeof id !== "string") {
+    throw new Error("Invalid contact ID");
   }
 
-  const updates = Object.fromEntries(formData);
-  await updateContact(params.contactId as string, updates);
-  return redirect(`/contacts/${params.contactId}`);
+  // Eliminar el contacto seleccionado
+  await deleteContact(id);
+
+  // Obtener la lista de contactos restantes
+  const remainingContacts = await getContacts();
+
+  // Determinar a dónde redirigir
+  const nextContact = remainingContacts.length > 0 ? remainingContacts[0].id : null;
+
+  // Si hay otro contacto, redirigir a su página; si no, ir a la lista de contactos
+  return redirect(`${nextContact ? `/contacts/${nextContact}` : "/contacts"}?message=Contacto eliminado correctamente`);
 };
-
-export default function EditContact() {
-  const { contact } = useLoaderData<typeof loader>();
-
-  return (
-    <div>
-      <h2>Edit Contact</h2>
-      <Form method="post">
-        <label>
-          First Name: <input name="first" defaultValue={contact.first} />
-        </label>
-        <label>
-          Last Name: <input name="last" defaultValue={contact.last} />
-        </label>
-        <label>
-          Twitter: <input name="twitter" defaultValue={contact.twitter} />
-        </label>
-        <label>
-          Avatar URL: <input name="avatar" defaultValue={contact.avatar} />
-        </label>
-        <label>
-          Notes: <textarea name="notes" defaultValue={contact.notes} />
-        </label>
-        <button type="submit">Save</button>
-      </Form>
-
-      <Form method="post" onSubmit={(event) => {
-        const response = confirm("Please confirm you want to delete this record.");
-        if (!response) {
-          event.preventDefault();
-        }
-      }}>
-        <input type="hidden" name="_method" value="delete" />
-        <button type="submit">Delete</button>
-      </Form>
-    </div>
-  );
-}
